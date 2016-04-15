@@ -11,10 +11,12 @@ public class PropositionParser {
     }
 
     private void skipSpace() {
-        if (pos < length) {
+        while (pos < length) {
             char c = str.charAt(pos);
-            while (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
-                c = str.charAt(++pos);
+            if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
+                ++pos;
+            } else {
+                break;
             }
         }
     }
@@ -80,6 +82,7 @@ public class PropositionParser {
         this.str = str;
         length = str.length();
         pos = 0;
+        skipSpace();
         return parseProposition();
     }
 
@@ -92,6 +95,8 @@ public class PropositionParser {
             Ast ast;
             if (match("\\not")) {
                 ast = parseProposition();
+                if (ast == null)
+                    return null;
                 ast = new Not(ast);
             } else {
                 Ast first = parseProposition();
@@ -110,6 +115,8 @@ public class PropositionParser {
                     return null;
                 }
                 Ast second = parseProposition();
+                if (second == null)
+                    return null;
                 ast = new CompoundProposition(type, first, second);
             }
             if (!match(')'))
@@ -127,10 +134,12 @@ public class PropositionParser {
         if (match('_'))  {
             if (!match('{'))
                 return null;
+            int p0 = pos;
             int sub = parseInt();
-            if (!match('}')) {
+            if (p0 == pos)
                 return null;
-            }
+            if (!match('}'))
+                return null;
             return new PropositionalLetter(id, sub);
         }
         return new PropositionalLetter(id);
