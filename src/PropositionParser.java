@@ -2,11 +2,11 @@ public class PropositionParser {
     public String str;
     public int length, pos;
 
-    private boolean isAlpha(char c) {
+    public static boolean isAlpha(char c) {
         return c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
     }
 
-    private boolean isDigit(char c) {
+    public static boolean isDigit(char c) {
         return c >= '0' && c <= '9';
     }
 

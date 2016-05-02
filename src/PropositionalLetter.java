@@ -25,4 +25,22 @@ public class PropositionalLetter extends Ast {
     public int getSubscription() {
         return sub;
     }
+
+    private static final String subNums = "₀₁₂₃₄₅₆₇₈₉";
+    @Override
+    public String toString() {
+        if (hasSub) {
+            StringBuffer sb = new StringBuffer();
+            int x = sub;
+            while (x > 0) {
+                int d = x % 10;
+                sb.insert(0, subNums.charAt(d));
+                x /= 10;
+            }
+            sb.insert(0, id);
+            return sb.toString();
+        } else {
+            return id;
+        }
+    }
 }

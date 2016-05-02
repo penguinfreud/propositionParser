@@ -8,4 +8,12 @@ public class Not extends Ast {
     public Ast getAst() {
         return ast;
     }
+
+    @Override
+    public String toString() {
+        String s = ast.toString();
+        return "(¬" +
+                (PropositionParser.isAlpha(s.charAt(0))? " ": "") +
+                s + ")";
+    }
 }

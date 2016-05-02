@@ -1,6 +1,16 @@
 public class CompoundProposition extends Ast {
     public enum ConnectiveType {
-        AND, OR, IMPLY, ConnectiveType, EQ
+        AND("∧"), OR("∨"), IMPLY("→"), EQ("↔");
+
+        private String str;
+        ConnectiveType(String str) {
+            this.str = str;
+        }
+
+        @Override
+        public String toString() {
+            return str;
+        }
     }
 
     private ConnectiveType type;
@@ -22,5 +32,12 @@ public class CompoundProposition extends Ast {
 
     public Ast getSecond() {
         return second;
+    }
+
+    @Override
+    public String toString() {
+        String s = second.toString();
+        return "(" + first.toString() + " " + type.toString() + " " +
+                s + ")";
     }
 }

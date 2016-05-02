@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
+    static PropositionParser parser = new PropositionParser();
+    
     public static void main(String[] args) {
         test();
         try {
@@ -13,7 +15,6 @@ public class Main {
             } else {
                 scanner = new Scanner(System.in);
             }
-            PropositionParser parser = new PropositionParser();
             while (scanner.hasNextLine()) {
                 Ast ast = parser.parse(scanner.nextLine());
                 if (ast == null) {
@@ -27,13 +28,13 @@ public class Main {
         }
     }
 
-    private static void testValidCase(PropositionParser parser, String str) {
+    private static void testValidCase(String str) {
         if (parser.parse(str) == null) {
             System.err.println("Test failed: " + str);
         }
     }
 
-    private static void testInvalidCase(PropositionParser parser, String str) {
+    private static void testInvalidCase(String str) {
         if (parser.parse(str) != null) {
             System.err.println("Test failed: " + str);
         }
@@ -41,27 +42,27 @@ public class Main {
 
     public static void test() {
         PropositionParser parser = new PropositionParser();
-        testValidCase(parser, "a");
-        testValidCase(parser, " AjfdD\t");
-        testValidCase(parser, "A _ {  00327 }");
-        testValidCase(parser, "(\\not a)");
-        testValidCase(parser, " ( \\not (\\not A_{3})  ) ");
-        testValidCase(parser, "((\\not a) \\and (Z_{0} \\eq p))");
-        testValidCase(parser, "(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not a))))))))))))))");
-        testValidCase(parser, "((z \\eq (\\not (c \\imply (\\not (Ds \\eq JI))))) \\or ((\\not a) \\imply (\\not B)))");
+        testValidCase("a");
+        testValidCase(" AjfdD\t");
+        testValidCase("A _ {  00327 }");
+        testValidCase("(\\not a)");
+        testValidCase(" ( \\not (\\not A_{3})  ) ");
+        testValidCase("((\\not a) \\and (Z_{0} \\eq p))");
+        testValidCase("(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not(\\not a))))))))))))))");
+        testValidCase("((z \\eq (\\not (c \\imply (\\not (Ds \\eq JI))))) \\or ((\\not a) \\imply (\\not B)))");
 
-        testInvalidCase(parser, "");
-        testInvalidCase(parser, "\\");
-        testInvalidCase(parser, "(a)");
-        testInvalidCase(parser, "((\\not a))");
-        testInvalidCase(parser, "((a \\imply b))");
-        testInvalidCase(parser, "((a \\and b");
-        testInvalidCase(parser, "s_{}");
-        testInvalidCase(parser, "(\\not Se_{32)");
-        testInvalidCase(parser, "(a \\f b)");
-        testInvalidCase(parser, "(a a \\and b)");
-        testInvalidCase(parser, "a_{32 3}");
-        testInvalidCase(parser, "((\\not jf_) \\imply b)");
-        testInvalidCase(parser, "(a \\imply (b))");
+        testInvalidCase("");
+        testInvalidCase("\\");
+        testInvalidCase("(a)");
+        testInvalidCase("((\\not a))");
+        testInvalidCase("((a \\imply b))");
+        testInvalidCase("((a \\and b");
+        testInvalidCase("s_{}");
+        testInvalidCase("(\\not Se_{32)");
+        testInvalidCase("(a \\f b)");
+        testInvalidCase("(a a \\and b)");
+        testInvalidCase("a_{32 3}");
+        testInvalidCase("((\\not jf_) \\imply b)");
+        testInvalidCase("(a \\imply (b))");
     }
 }
