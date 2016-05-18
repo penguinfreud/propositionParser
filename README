@@ -1,0 +1,11 @@
+1.用法
+（1）编译
+cd src
+javac *.java
+（2）运行GUI程序
+java Viewer
+（3）运行命令行程序
+java Main
+
+2.实现
+递归下降语法分析器

@@ -52,7 +52,7 @@ public class PropositionParser {
         }
     }
 
-    private String parseIdentifier() {
+    private String parseIdentifier(boolean trim) {
         StringBuilder builder = new StringBuilder();
         while (pos < length) {
             char c = str.charAt(pos);
@@ -61,8 +61,12 @@ public class PropositionParser {
             builder.append(c);
             ++pos;
         }
-        skipSpace();
+        if (trim) skipSpace();
         return builder.toString();
+    }
+    
+    private String parseIdentifier() {
+        return parseIdentifier(true);
     }
 
     private int parseInt() {
@@ -83,7 +87,10 @@ public class PropositionParser {
         length = str.length();
         pos = 0;
         skipSpace();
-        return parseProposition();
+        Ast ast = parseProposition();
+        if (pos < length)
+            return null;
+        return ast;
     }
 
     public Ast parseProposition() {
@@ -128,10 +135,10 @@ public class PropositionParser {
     }
 
     public Ast parsePropositionalLetter() {
-        String id = parseIdentifier();
+        String id = parseIdentifier(false);
         if (id.isEmpty())
             return null;
-        if (match('_'))  {
+        if (match('_', false))  {
             if (!match('{'))
                 return null;
             int p0 = pos;
@@ -141,6 +148,8 @@ public class PropositionParser {
             if (!match('}'))
                 return null;
             return new PropositionalLetter(id, sub);
+        } else {
+            skipSpace();
         }
         return new PropositionalLetter(id);
     }

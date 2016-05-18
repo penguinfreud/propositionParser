@@ -44,7 +44,7 @@ public class Main {
         PropositionParser parser = new PropositionParser();
         testValidCase("a");
         testValidCase(" AjfdD\t");
-        testValidCase("A _ {  00327 }");
+        testValidCase("A_{  00327 }");
         testValidCase("(\\not a)");
         testValidCase(" ( \\not (\\not A_{3})  ) ");
         testValidCase("((\\not a) \\and (Z_{0} \\eq p))");
